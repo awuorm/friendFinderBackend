@@ -1,9 +1,11 @@
 const db = require("../dbConfig");
 
-const {
+module.exports = {
     find,
 }
 
 function find() {
-    db("questions");
+   return db("questions as q")
+    .join("answers as a","a.questionId","q.id")
+    .select("q.id","q.questionBody","a.answersBody");
 }
