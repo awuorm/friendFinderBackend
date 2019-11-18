@@ -7,7 +7,7 @@ module.exports = {
 function find() {
   return db("questions as q")
     .join("answers as a", "a.questionId", "q.id")
-    .select("a.questionid", "q.questionsBody", "a.answersBody");
+    .select("a.questionId", "q.questionsBody", "a.answersBody");
 }
 
 // function findBy(id) {
