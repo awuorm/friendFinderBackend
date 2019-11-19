@@ -91,7 +91,29 @@ exports.up = function(knex) {
         .boolean("matched")
         .notNullable()
         .defaultTo(false);
-    });
+    })
+    .createTable("answeredQuestions",table => {
+        table.increments();
+        table
+        .integer("userId")
+        .notNullable()
+        .unsigned()
+        .references("id")
+        .inTable("users")
+        table
+        .integer("questionId")
+        .notNullable()
+        .unsigned()
+        .references("id")
+        .inTable("questions")
+        table
+        .integer("answerId")
+        .notNullable()
+        .unsigned()
+        .references("id")
+        .inTable("answers")
+
+    })
 };
 
 exports.down = function(knex) {
@@ -99,6 +121,7 @@ exports.down = function(knex) {
     .dropTableIfExists("matches")
     .dropTableIfExists("chat")
     .dropTableIfExists("userProfile")
+    .dropTableIfExists("answeredQuestions")
     .dropTableIfExists("answers")
     .dropTableIfExists("questions")
     .dropTableIfExists("users")
