@@ -9,7 +9,3 @@ function find() {
     .join("answers as a", "a.questionId", "q.id")
     .select("a.questionId", "q.questionsBody", "a.answersBody");
 }
-
-// function findBy(id) {
-//   return db("answers as a").where({ questionId: id });
-// }
