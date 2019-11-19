@@ -1,31 +1,45 @@
 const express = require("express");
 const db = require("./questionsModel");
 const restricted = require("../auth/authenticate");
+const db2 = require("../matches/matchModel");
 
 const router = express.Router();
 
 router.get("/questions", restricted, handleQuestionsGet);
+router.post("/answers", restricted, handleAnswersPost);
+
+function handleAnswersPost(req, res) {
+  const answers = req.body;
+  const id = req.decodedToken.subject;
+  db.add(answers, id)
+    .then(data => {
+        res.status(200).json(data);
+        console.table(data);
+    //   data.map(ans =>
+    //     db2
+    //       .findMatch(ans.answerId)
+    //       .then(data => {
+    //       })
+    //       .catch(error => {
+    //         res.status(500).json({ errorMessage: error.message });
+    //         console.log(error);
+    //       })
+    })
+    .catch(error => {
+      res.status(500).json({ errorMessage: error.message });
+      console.log(error);
+    });
+}
 
 function handleQuestionsGet(req, res) {
   db.find()
     .then(data => {
-    //   let answers = [];
-    //   data.map((question, index) => {
-    //     let i = index + 1;
-    //     if (question.id === i) {
-    //       answers = answers.concat(question.answersBody);
-    //       console.log(answers);
-    //       i--;
-    //       return answers;
-    //     }
-    //     return question;
-    //   });
       res.status(200).json(data);
       console.table(data);
     })
     .catch(error => {
       res.status(500).json({ errorMessage: error.message });
-      console.table(error);
+      console.log(error);
     });
 }
 
