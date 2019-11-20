@@ -4,6 +4,7 @@ module.exports = {
   findById,
   findMatch,
   potentialFriends,
+  insertMatches,
 };
 function findMatch(id) {
   return db("answeredQuestions as a")
@@ -20,16 +21,16 @@ function findById(id) {
   return answerQuery;
 }
 
-function potentialFriends(id, match) {
+function potentialFriends(id) {
   return db.raw(
-    `SELECT ouA.user_id AS potentialFriend,
+    `SELECT ouA.userId AS potentialFriend,
     u.username,
     count( * ) AS match_probability
 FROM (
         SELECT ua.userId,
                ua.questionId,
                ua.answerId
-          FROM usersAnswers AS ua
+          FROM answeredQuestions AS ua
          WHERE ua.userId = ${id}
     )
     AS liA
@@ -39,14 +40,14 @@ FROM (
                ua.questionId,
                ua.answerId
           FROM answeredQuestions AS ua
-         WHERE ua.user_id != ${id}
+         WHERE ua.userId != 1
     )
     AS ouA ON liA.questionId = ouA.questionId AND 
               liA.answerId = ouA.answerId
               JOIN users as u on ouA.userId = u.id
 GROUP BY liA.userId,
        ouA.userId
-HAVING count( * ) > ${match}
+HAVING count( * ) > 1
 ORDER BY count( * ) DESC;`
   );
 }

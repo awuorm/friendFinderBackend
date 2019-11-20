@@ -81,6 +81,8 @@ exports.up = function(knex) {
         .unsigned()
         .references("id")
         .inTable("users");
+        table.integer("probability")
+        .notNullable();
       table
         .integer("potentialMatches")
         .notNullable()
