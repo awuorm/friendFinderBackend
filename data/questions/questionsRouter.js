@@ -13,24 +13,8 @@ function handleAnswersPost(req, res) {
   const id = req.decodedToken.subject;
   db.add(answers, id)
     .then(data => {
-      let matchesArray = [];
-      let matchesArr = [];
-      data.map(match => {
-        match.map(user => {
-          matchesArray = matchesArray.concat(user);
-          return matchesArray;
-        });
-      });
-      matchesArray.map(match => {
-        if (id !== match.userId) {
-          matchesArr = matchesArr.concat(match);
-          return matchesArr;
-        } else {
-          return { info: "No match" };
-        }
-      });
-      res.status(200).json(matchesArr);
-      console.table(matchesArr);
+      res.status(200).json({success: "All your answers have been recorded"});
+      // console.table(data);
     })
     .catch(error => {
       res.status(500).json({ errorMessage: error.message });
