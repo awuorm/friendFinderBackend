@@ -1,7 +1,7 @@
 
 exports.seed = function(knex) {
   
-  return knex('multichoice').insert([
+  return knex('multiChoice').insert([
     {id: 1, ans_a:1,ans_b:2, questionId:1},
     {id: 2, ans_a:3,ans_b:4, questionId:2},
     {id: 3, ans_a:5,ans_b:6, questionId:3},

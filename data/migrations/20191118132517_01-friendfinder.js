@@ -114,6 +114,31 @@ exports.up = function(knex) {
         .inTable("answers")
 
     })
+    .createTable("multiChoice",table => {
+      table.increments();
+      table
+      .integer("questionId")
+      .notNullable()
+      .unsigned()
+      .references("id")
+      .inTable("questions")
+      table
+      .integer("ans_a")
+      .unsigned()
+      .references("id")
+      .inTable("answers")
+      table
+      .integer("ans_b")
+      .unsigned()
+      .references("id")
+      .inTable("answers")
+      table
+      .integer("ans_c")
+      .unsigned()
+      .references("id")
+      .inTable("answers")
+
+  })
 };
 
 exports.down = function(knex) {
@@ -122,6 +147,7 @@ exports.down = function(knex) {
     .dropTableIfExists("chat")
     .dropTableIfExists("userProfile")
     .dropTableIfExists("answeredQuestions")
+    .dropTableIfExists("multiChoice")
     .dropTableIfExists("answers")
     .dropTableIfExists("questions")
     .dropTableIfExists("users")

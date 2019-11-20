@@ -12,7 +12,8 @@ function add(answers,id) {
 }
 
 function find() {
-  return db("questions as q")
-    .join("answers as a", "a.questionId", "q.id")
-    .select("a.questionId", "q.questionsBody", "a.answersBody");
+  return db("multiChoice as m")
+    .join("questions as q", "m.questionId", "q.id")
+    .join("answers as a", "a.id", "m.ans_a","m.ans_b")
+    .select("m.id", "q.questionsBody", "a.answersBody");
 }
