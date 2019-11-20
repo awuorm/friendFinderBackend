@@ -14,6 +14,5 @@ function add(answers,id) {
 function find() {
   return db("multiChoice as m")
     .join("questions as q", "m.questionId", "q.id")
-    .join("answers as a", "a.id", "m.ans_a","m.ans_b")
-    .select("m.id", "q.questionsBody", "a.answersBody");
+    .select("m.id", "q.questionsBody", "m.ans_a","m.ans_b","m.ans_c");
 }

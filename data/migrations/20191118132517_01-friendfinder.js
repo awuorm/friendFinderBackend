@@ -92,53 +92,39 @@ exports.up = function(knex) {
         .notNullable()
         .defaultTo(false);
     })
-    .createTable("answeredQuestions",table => {
-        table.increments();
-        table
+    .createTable("answeredQuestions", table => {
+      table.increments();
+      table
         .integer("userId")
         .notNullable()
         .unsigned()
         .references("id")
-        .inTable("users")
-        table
+        .inTable("users");
+      table
         .integer("questionId")
         .notNullable()
         .unsigned()
         .references("id")
-        .inTable("questions")
-        table
+        .inTable("questions");
+      table
         .integer("answerId")
         .notNullable()
         .unsigned()
         .references("id")
-        .inTable("answers")
-
+        .inTable("answers");
     })
-    .createTable("multiChoice",table => {
+    .createTable("multiChoice", table => {
       table.increments();
       table
-      .integer("questionId")
-      .notNullable()
-      .unsigned()
-      .references("id")
-      .inTable("questions")
-      table
-      .integer("ans_a")
-      .unsigned()
-      .references("id")
-      .inTable("answers")
-      table
-      .integer("ans_b")
-      .unsigned()
-      .references("id")
-      .inTable("answers")
-      table
-      .integer("ans_c")
-      .unsigned()
-      .references("id")
-      .inTable("answers")
-
-  })
+        .integer("questionId")
+        .notNullable()
+        .unsigned()
+        .references("id")
+        .inTable("questions");
+      table.text("ans_a");
+      table.text("ans_b");
+      table.text("ans_c");
+    });
 };
 
 exports.down = function(knex) {
