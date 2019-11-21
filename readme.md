@@ -54,4 +54,35 @@ Array of questions:
 
 post method,url:
 
+https://friend-finder-backend.herokuapp.com/api/restricted/msgs
+
+expected request body: 
+{"sender":1,"recepient":2,"message":"how are you?"}
+
+expected response:
+{ success: "Message sent successfully" }
+
+get method,url:
+
+https://friend-finder-backend.herokuapp.com/api/restricted/msgs
+
+ expected response:
+
+ Array of messages: 
+   [{
+    "id": 1,
+    "sender": 1,
+    "recepient": 2,
+    "message": "hello"
+  },
+  {
+    "id": 6,
+    "sender": 1,
+    "recepient": 2,
+    "message": "how are you?"
+  }
+]
+
+
+
 

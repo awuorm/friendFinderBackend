@@ -3,8 +3,8 @@ const db = require("./messagesModel");
 const router = express.Router();
 const restricted = require("../auth/authenticate");
 
-router.post("/",restricted, handleMsgPost);
-router.get("/",restricted, handleMsgGet);
+router.post("/", restricted, handleMsgPost);
+router.get("/", restricted, handleMsgGet);
 
 function handleMsgGet(req, res) {
   db.find()
@@ -22,7 +22,7 @@ function handleMsgPost(req, res) {
   const msg = req.body;
   db.add(msg)
     .then(data => {
-      res.status(201).json(data);
+      res.status(201).json({ success: "Message sent successfully" });
       console.table(data);
     })
     .catch(error => {
