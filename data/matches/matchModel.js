@@ -94,10 +94,10 @@ ORDER BY count( * ) DESC;`
     )
     .then(match => {
       if (process.env.DB_ENV === "production") {
-        insertMatches(match.rows, id);
+         return insertMatches(match.rows, id);
         // res.status(200).json(matches.rows);
       } else {
-        insertMatches(match, id);
+       return insertMatches(match, id);
         // res.status(200).json(matches);
       }
     });
