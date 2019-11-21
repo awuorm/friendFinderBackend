@@ -76,7 +76,7 @@ exports.up = function(knex) {
     .createTable("matches", table => {
       table.increments();
       table
-        .integer("loggedIn")
+        .integer("loggedin")
         .notNullable()
         .unsigned()
         .references("id")
@@ -84,7 +84,7 @@ exports.up = function(knex) {
         table.integer("probability")
         .notNullable();
       table
-        .integer("potentialMatches")
+        .integer("potentialmatches")
         .notNullable()
         .unsigned()
         .references("id")

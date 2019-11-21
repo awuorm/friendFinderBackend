@@ -255,24 +255,24 @@ function <span class="fstat-no" title="function not covered" >updateMatches(</sp
 <span class="cstat-no" title="statement not covered" > return db("matches")</span>
     .where({ id: user.id})
     .update({
-      potentialMatches: user.potentialMatches,
+      potentialmatches: user.potentialmatches,
       probability: user.probability,
-      loggedIn: id,
+      loggedin: id,
       matched: user.matched
     });
 }
 &nbsp;
 function <span class="fstat-no" title="function not covered" >findMatches(</span>) {
 <span class="cstat-no" title="statement not covered" >  return db("matches as m")</span>
-    .join("users as u", "u.id", "m.potentialMatches")
+    .join("users as u", "u.id", "m.potentialmatches")
     .select(
       "m.id",
-      "m.loggedIn",
+      "m.loggedin",
       "u.username as potentialMatch",
       "m.matched",
       "m.probability"
     )
-    .groupBy("m.potentialMatches");
+    .groupBy("m.potentialmatches");
 }
 &nbsp;
 function <span class="fstat-no" title="function not covered" >insertMatches(</span>match,id) {
@@ -280,9 +280,9 @@ function <span class="fstat-no" title="function not covered" >insertMatches(</sp
   let matchedUsers = <span class="cstat-no" title="statement not covered" >[];</span>
 <span class="cstat-no" title="statement not covered" >  match.map(<span class="fstat-no" title="function not covered" >us</span>er =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    matchedUsers = matchedUsers.concat({</span>
-      potentialMatches: user.potentialMatches,
+      potentialmatches: user.potentialmatches,
       probability: user.probability,
-      loggedIn: id
+      loggedin: id
     });
 <span class="cstat-no" title="statement not covered" >    return matchedUsers;</span>
   });
@@ -307,7 +307,7 @@ function <span class="fstat-no" title="function not covered" >findById(</span>id
 &nbsp;
 function <span class="fstat-no" title="function not covered" >potentialFriends(</span>id) {
   let probable = <span class="cstat-no" title="statement not covered" >db.raw(</span>
-    `SELECT ouA.userid AS potentialMatches,
+    `SELECT ouA.userid AS potentialmatches,
     count( * ) AS probability
 FROM (
         SELECT ua.userid,

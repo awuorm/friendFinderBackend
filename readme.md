@@ -106,21 +106,21 @@ expected response:
 [
   {
     "id": 14,
-    "loggedIn": 3,
+    "loggedin": 3,
     "potentialMatch": "mildred",
     "matched": 0,
     "probability": 3
   },
   {
     "id": 1,
-    "loggedIn": 1,
+    "loggedin": 1,
     "potentialMatch": "alice",
     "matched": 1,
     "probability": 2
   },
   {
     "id": 7,
-    "loggedIn": 1,
+    "loggedin": 1,
     "potentialMatch": "effie",
     "matched": 0,
     "probability": 2
