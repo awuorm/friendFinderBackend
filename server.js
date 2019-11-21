@@ -1,6 +1,10 @@
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
+const dotenv = require("dotenv");
+dotenv.config();
+
+
 const countryRouter = require("./data/countryRouter");
 const authRouter = require("./data/auth/authRouter");
 const questionsRouter = require("./data/questions/questionsRouter");

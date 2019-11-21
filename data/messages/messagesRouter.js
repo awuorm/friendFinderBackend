@@ -1,9 +1,10 @@
 const express = require("express");
 const db = require("./messagesModel");
 const router = express.Router();
+const restricted = require("../auth/authenticate");
 
-router.post("/", handleMsgPost);
-router.get("/", handleMsgGet);
+router.post("/",restricted, handleMsgPost);
+router.get("/",restricted, handleMsgGet);
 
 function handleMsgGet(req, res) {
   db.find()
@@ -21,7 +22,7 @@ function handleMsgPost(req, res) {
   const msg = req.body;
   db.add(msg)
     .then(data => {
-      res.status(200).json(data);
+      res.status(201).json(data);
       console.table(data);
     })
     .catch(error => {
