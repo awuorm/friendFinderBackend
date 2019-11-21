@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.post("/register", handleUserRegistration);
 router.post("/login", handleUSerLogin);
-router.get("/stories", handleUsersGet);
+router.get("/users", handleUsersGet);
 
 function handleUsersGet(req, res) {
   db.find()
@@ -60,11 +60,11 @@ function handleUserRegistration(req, res) {
   const hash = bcrypt.hashSync(user.password);
   user.password = hash;
   db.add(user)
-    .then(data => {
+    .then(() => {
       res
         .status(201)
         .json({ success: `Registration successful for user ${user.username}` });
-      console.log(data);
+      // console.log(data);
     })
     .catch(error => {
       res.status(500).json({ errorMessage: error.message });

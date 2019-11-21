@@ -81,6 +81,8 @@ exports.up = function(knex) {
         .unsigned()
         .references("id")
         .inTable("users");
+        table.integer("probability")
+        .notNullable();
       table
         .integer("potentialMatches")
         .notNullable()
@@ -92,28 +94,39 @@ exports.up = function(knex) {
         .notNullable()
         .defaultTo(false);
     })
-    .createTable("answeredQuestions",table => {
-        table.increments();
-        table
+    .createTable("answeredQuestions", table => {
+      table.increments();
+      table
         .integer("userId")
         .notNullable()
         .unsigned()
         .references("id")
-        .inTable("users")
-        table
+        .inTable("users");
+      table
         .integer("questionId")
         .notNullable()
         .unsigned()
         .references("id")
-        .inTable("questions")
-        table
+        .inTable("questions");
+      table
         .integer("answerId")
         .notNullable()
         .unsigned()
         .references("id")
-        .inTable("answers")
-
+        .inTable("answers");
     })
+    .createTable("multiChoice", table => {
+      table.increments();
+      table
+        .integer("questionId")
+        .notNullable()
+        .unsigned()
+        .references("id")
+        .inTable("questions");
+      table.text("ans_a");
+      table.text("ans_b");
+      table.text("ans_c");
+    });
 };
 
 exports.down = function(knex) {
@@ -122,6 +135,7 @@ exports.down = function(knex) {
     .dropTableIfExists("chat")
     .dropTableIfExists("userProfile")
     .dropTableIfExists("answeredQuestions")
+    .dropTableIfExists("multiChoice")
     .dropTableIfExists("answers")
     .dropTableIfExists("questions")
     .dropTableIfExists("users")
