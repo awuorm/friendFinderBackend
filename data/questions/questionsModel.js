@@ -13,6 +13,6 @@ function add(answers,id) {
 
 function find() {
   return db("multichoice as m")
-    .join("questions as q", "m.questionId", "q.id")
+    .join("questions as q", "m.questionid", "q.id")
     .select("m.id", "q.questionsBody", "m.ans_a","m.ans_b","m.ans_c");
 }

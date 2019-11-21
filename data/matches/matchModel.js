@@ -50,44 +50,44 @@ function insertMatches(match,id) {
 }
 function findMatch(id) {
   return db("answeredquestions as a")
-    .select("a.userId", "a.answerId")
-    .where({ answerId: id });
+    .select("a.userid", "a.answerid")
+    .where({ answerid: id });
 }
 
 function findById(id) {
   let answerQuery = db("answeredquestions as a")
-    .where({ userId: id })
-    .select("a.answerId");
-  answerQuery = answerQuery.map(ans => findMatch(ans.answerId));
+    .where({ userid: id })
+    .select("a.answerid");
+  answerQuery = answerQuery.map(ans => findMatch(ans.answerid));
 
   return answerQuery;
 }
 
 function potentialFriends(id) {
   let probable = db.raw(
-    `SELECT ouA.userId AS potentialMatches,
+    `SELECT ouA.userid AS potentialMatches,
     count( * ) AS probability
 FROM (
-        SELECT ua.userId,
-               ua.questionId,
-               ua.answerId
+        SELECT ua.userid,
+               ua.questionid,
+               ua.answerid
           FROM answeredquestions AS ua
-         WHERE ua.userId = ${id}
+         WHERE ua.userid = ${id}
     )
     AS liA
     JOIN
     (
-        SELECT ua.userId,
-               ua.questionId,
-               ua.answerId
+        SELECT ua.userid,
+               ua.questionid,
+               ua.answerid
           FROM answeredquestions AS ua
-         WHERE ua.userId != ${id}
+         WHERE ua.userid != ${id}
     )
-    AS ouA ON liA.questionId = ouA.questionId AND 
-              liA.answerId = ouA.answerId
-              JOIN users as u on ouA.userId = u.id 
-GROUP BY liA.userId,
-       ouA.userId
+    AS ouA ON liA.questionid = ouA.questionid AND 
+              liA.answerid = ouA.answerid
+              JOIN users as u on ouA.userid = u.id 
+GROUP BY liA.userid,
+       ouA.userid
 HAVING count( * ) > 0
 ORDER BY count( * ) DESC;`
   );

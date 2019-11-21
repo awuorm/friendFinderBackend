@@ -89,7 +89,7 @@ post method,url:
 https://friend-finder-backend.herokuapp.com/api/restricted/answers
 
 request body: 
-{"id":3,"questionId":3, "userId": 1,"answerId":6}
+{"id":3,"questionid":3, "userid": 1,"answerid":6}
 
 response body: 
 {
