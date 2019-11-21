@@ -10,8 +10,8 @@ module.exports = {
 };
 
 function updateMatches(user, id) {
- return db("matches")
-    .where({ id: user.id})
+  return db("matches")
+    .where({ id: user.id })
     .update({
       potentialMatches: user.potentialMatches,
       probability: user.probability,
@@ -33,7 +33,7 @@ function findMatches() {
     .groupBy("m.potentialMatches");
 }
 
-function insertMatches(match,id) {
+function insertMatches(match, id) {
   console.log(match, id);
   let matchedUsers = [];
   match.map(user => {
@@ -64,8 +64,9 @@ function findById(id) {
 }
 
 function potentialFriends(id) {
- return db.raw(
-    `SELECT ouA.userid AS potentialMatches,
+  return db
+    .raw(
+      `SELECT ouA.userid AS potentialMatches,
     count( * ) AS probability
 FROM (
         SELECT ua.userid,
@@ -90,6 +91,14 @@ GROUP BY liA.userid,
        ouA.userid
 HAVING count( * ) > 0
 ORDER BY count( * ) DESC;`
-  )
-  // .then(match => insertMatches(match, id));
+    )
+    .then(match => {
+      if (process.env.DB_ENV === "production") {
+        insertMatches(match.rows, id);
+        // res.status(200).json(matches.rows);
+      } else {
+        insertMatches(match, id);
+        // res.status(200).json(matches);
+      }
+    });
 }
