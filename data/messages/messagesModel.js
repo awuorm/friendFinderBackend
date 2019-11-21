@@ -1,19 +1,19 @@
 const db = require("../dbConfig");
 
 module.exports = {
-    add,
-    find,
-    findById,
-}
+  add,
+  find,
+  findById
+};
 
 function findById(id) {
-   return db("chat").where({id},"message");
-   
+  return db("chat").where({ id });
 }
 function add(message) {
-   return db("chat").insert(message).then(ids =>findById(ids[0]));
+  return db("chat")
+    .insert(message, "id");
 }
 
 function find() {
-   return db("chat");
+  return db("chat");
 }
