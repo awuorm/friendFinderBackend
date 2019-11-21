@@ -29,7 +29,7 @@ function findMatches() {
       "u.username as potentialMatch",
       "m.matched",
       "m.probability"
-    )
+    ).where({matched:false})
     .groupBy("m.potentialmatches",
     "m.loggedin",
     "u.username",
