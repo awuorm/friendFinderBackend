@@ -60,7 +60,7 @@ function handleUserRegistration(req, res) {
   const hash = bcrypt.hashSync(user.password);
   user.password = hash;
   db.add(user)
-    .then(data => {
+    .then(() => {
       res
         .status(201)
         .json({ success: `Registration successful for user ${user.username}` });

@@ -46,7 +46,7 @@ function insertMatches(match,id) {
   });
   return db("matches")
     .insert(matchedUsers)
-    .then(match => findMatches(id));
+    .then(() => findMatches(id));
 }
 function findMatch(id) {
   return db("answeredQuestions as a")

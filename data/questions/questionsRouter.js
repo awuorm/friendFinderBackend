@@ -1,7 +1,7 @@
 const express = require("express");
 const db = require("./questionsModel");
 const restricted = require("../auth/authenticate");
-const db2 = require("../matches/matchModel");
+// const db2 = require("../matches/matchModel");
 
 const router = express.Router();
 
@@ -12,7 +12,7 @@ function handleAnswersPost(req, res) {
   const answers = req.body;
   const id = req.decodedToken.subject;
   db.add(answers, id)
-    .then(data => {
+    .then(() => {
       res.status(200).json({success: "All your answers have been recorded"});
       // console.table(data);
     })
