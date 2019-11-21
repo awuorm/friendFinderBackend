@@ -13,24 +13,24 @@ function updateMatches(user, id) {
   return db("matches")
     .where({ id: user.id })
     .update({
-      potentialMatches: user.potentialMatches,
+      potentialmatches: user.potentialmatches,
       probability: user.probability,
-      loggedIn: id,
+      loggedin: id,
       matched: user.matched
     });
 }
 
 function findMatches() {
   return db("matches as m")
-    .join("users as u", "u.id", "m.potentialMatches")
+    .join("users as u", "u.id", "m.potentialmatches")
     .select(
       "m.id",
-      "m.loggedIn",
+      "m.loggedin",
       "u.username as potentialMatch",
       "m.matched",
       "m.probability"
     )
-    .groupBy("m.potentialMatches");
+    .groupBy("m.potentialmatches");
 }
 
 function insertMatches(match, id) {
@@ -38,9 +38,9 @@ function insertMatches(match, id) {
   let matchedUsers = [];
   match.map(user => {
     matchedUsers = matchedUsers.concat({
-      potentialMatches: user.potentialMatches,
+      potentialmatches: user.potentialmatches,
       probability: user.probability,
-      loggedIn: id
+      loggedin: id
     });
     return matchedUsers;
   });
@@ -66,7 +66,7 @@ function findById(id) {
 function potentialFriends(id) {
   return db
     .raw(
-      `SELECT ouA.userid AS potentialMatches,
+      `SELECT ouA.userid AS potentialmatches,
     count( * ) AS probability
 FROM (
         SELECT ua.userid,
