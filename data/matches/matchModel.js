@@ -24,14 +24,13 @@ function findMatches() {
   return db("matches as m")
     .join("users as u", "u.id", "m.potentialmatches")
     .select(
-      "m.id",
+      "m.potentialmatches",
       "m.loggedin",
       "u.username as potentialMatch",
       "m.matched",
       "m.probability"
     )
     .groupBy("m.potentialmatches",
-    "m.id",
     "m.loggedin",
     "u.username",
     "m.matched",
