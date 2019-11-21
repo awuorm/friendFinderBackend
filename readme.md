@@ -83,6 +83,51 @@ https://friend-finder-backend.herokuapp.com/api/restricted/msgs
   }
 ]
 
+## answers endpoint:
+
+post method,url:
+https://friend-finder-backend.herokuapp.com/api/restricted/answers
+
+request body: 
+{"id":3,"questionId":3, "userId": 1,"answerId":6}
+
+response body: 
+{
+  "success": "All your answers have been recorded"
+}
+
+
+## matches endpoint: 
+
+get method,url:
+https://friend-finder-backend.herokuapp.com/api/restricted/matches
+
+expected response: 
+[
+  {
+    "id": 14,
+    "loggedIn": 3,
+    "potentialMatch": "mildred",
+    "matched": 0,
+    "probability": 3
+  },
+  {
+    "id": 1,
+    "loggedIn": 1,
+    "potentialMatch": "alice",
+    "matched": 1,
+    "probability": 2
+  },
+  {
+    "id": 7,
+    "loggedIn": 1,
+    "potentialMatch": "effie",
+    "matched": 0,
+    "probability": 2
+  }
+]
+
+
 
 
 
