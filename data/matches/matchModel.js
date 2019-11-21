@@ -91,7 +91,8 @@ GROUP BY liA.userid,
 HAVING count( * ) > 0
 ORDER BY count( * ) DESC;`
   );
-  return probable.then(match => insertMatches(match, id));
+  return probable;
+  // .then(match => insertMatches(match, id));
 
   // return probable;
 }
