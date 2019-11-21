@@ -49,13 +49,13 @@ function insertMatches(match,id) {
     .then(() => findMatches(id));
 }
 function findMatch(id) {
-  return db("answeredQuestions as a")
+  return db("answeredquestions as a")
     .select("a.userId", "a.answerId")
     .where({ answerId: id });
 }
 
 function findById(id) {
-  let answerQuery = db("answeredQuestions as a")
+  let answerQuery = db("answeredquestions as a")
     .where({ userId: id })
     .select("a.answerId");
   answerQuery = answerQuery.map(ans => findMatch(ans.answerId));
@@ -71,7 +71,7 @@ FROM (
         SELECT ua.userId,
                ua.questionId,
                ua.answerId
-          FROM answeredQuestions AS ua
+          FROM answeredquestions AS ua
          WHERE ua.userId = ${id}
     )
     AS liA
@@ -80,7 +80,7 @@ FROM (
         SELECT ua.userId,
                ua.questionId,
                ua.answerId
-          FROM answeredQuestions AS ua
+          FROM answeredquestions AS ua
          WHERE ua.userId != ${id}
     )
     AS ouA ON liA.questionId = ouA.questionId AND 
