@@ -30,7 +30,12 @@ function findMatches() {
       "m.matched",
       "m.probability"
     )
-    .groupBy("m.potentialmatches");
+    .groupBy("m.potentialmatches",
+    "m.id",
+    "m.loggedin",
+    "u.username as potentialMatch",
+    "m.matched",
+    "m.probability");
 }
 
 function insertMatches(match, id) {
