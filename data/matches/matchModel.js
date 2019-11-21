@@ -64,7 +64,7 @@ function findById(id) {
 }
 
 function potentialFriends(id) {
-  let probable = db.raw(
+ return db.raw(
     `SELECT ouA.userid AS potentialMatches,
     count( * ) AS probability
 FROM (
@@ -90,9 +90,5 @@ GROUP BY liA.userid,
        ouA.userid
 HAVING count( * ) > 0
 ORDER BY count( * ) DESC;`
-  );
-  return probable;
-  // .then(match => insertMatches(match, id));
-
-  // return probable;
+  ).then(match => insertMatches(match, id));
 }
