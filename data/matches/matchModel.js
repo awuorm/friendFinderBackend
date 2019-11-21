@@ -90,5 +90,6 @@ GROUP BY liA.userid,
        ouA.userid
 HAVING count( * ) > 0
 ORDER BY count( * ) DESC;`
-  ).then(match => insertMatches(match, id));
+  )
+  // .then(match => insertMatches(match, id));
 }
