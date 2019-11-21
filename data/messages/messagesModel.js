@@ -7,7 +7,7 @@ module.exports = {
 }
 
 function findById(id) {
-   return db("chat").where({id});
+   return db("chat").where({id},"message");
    
 }
 function add(message) {
