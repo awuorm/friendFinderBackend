@@ -12,7 +12,7 @@ function handleMatchesPut(req,res) {
   const user = req.body;
   db.updateMatches(user,id)
   .then(data => {
-    res.status(201).json(data);
+    res.status(201).json({success:"record updated successfully"});
     console.table(data);
   })
   .catch(error => {
