@@ -7,12 +7,12 @@ module.exports = {
 };
 
 function add(answers,id) {
-  return db("answeredQuestions")
+  return db("answeredquestions")
     .insert(answers).then(answers => matches.findById(id));
 }
 
 function find() {
-  return db("multiChoice as m")
+  return db("multichoice as m")
     .join("questions as q", "m.questionId", "q.id")
     .select("m.id", "q.questionsBody", "m.ans_a","m.ans_b","m.ans_c");
 }

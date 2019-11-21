@@ -291,13 +291,13 @@ function <span class="fstat-no" title="function not covered" >insertMatches(</sp
     .then(<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >findMatches(id))</span>;
 }
 function <span class="fstat-no" title="function not covered" >findMatch(</span>id) {
-<span class="cstat-no" title="statement not covered" >  return db("answeredQuestions as a")</span>
+<span class="cstat-no" title="statement not covered" >  return db("answeredquestions as a")</span>
     .select("a.userId", "a.answerId")
     .where({ answerId: id });
 }
 &nbsp;
 function <span class="fstat-no" title="function not covered" >findById(</span>id) {
-  let answerQuery = <span class="cstat-no" title="statement not covered" >db("answeredQuestions as a")</span>
+  let answerQuery = <span class="cstat-no" title="statement not covered" >db("answeredquestions as a")</span>
     .where({ userId: id })
     .select("a.answerId");
 <span class="cstat-no" title="statement not covered" >  answerQuery = answerQuery.map(<span class="fstat-no" title="function not covered" >an</span>s =&gt; <span class="cstat-no" title="statement not covered" >findMatch(ans.answerId))</span>;</span>
@@ -313,7 +313,7 @@ FROM (
         SELECT ua.userId,
                ua.questionId,
                ua.answerId
-          FROM answeredQuestions AS ua
+          FROM answeredquestions AS ua
          WHERE ua.userId = ${id}
     )
     AS liA
@@ -322,7 +322,7 @@ FROM (
         SELECT ua.userId,
                ua.questionId,
                ua.answerId
-          FROM answeredQuestions AS ua
+          FROM answeredquestions AS ua
          WHERE ua.userId != ${id}
     )
     AS ouA ON liA.questionId = ouA.questionId AND 

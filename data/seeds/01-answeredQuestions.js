@@ -1,7 +1,7 @@
 
 exports.seed = function(knex) {
   
-  return knex('answeredQuestions').insert([
+  return knex('answeredquestions').insert([
     {id: 13,questionId:1, userId: 2,answerId:2},
     {id: 14,questionId:2, userId: 2,answerId:3},
     {id: 15, questionId:3, userId: 2,answerId:5},

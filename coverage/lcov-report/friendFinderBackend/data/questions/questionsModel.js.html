@@ -91,12 +91,12 @@ module.exports = {
 };
 &nbsp;
 function <span class="fstat-no" title="function not covered" >add(</span>answers,id) {
-<span class="cstat-no" title="statement not covered" >  return db("answeredQuestions")</span>
+<span class="cstat-no" title="statement not covered" >  return db("answeredquestions")</span>
     .insert(answers).then(<span class="fstat-no" title="function not covered" >an</span>swers =&gt; <span class="cstat-no" title="statement not covered" >matches.findById(id))</span>;
 }
 &nbsp;
 function <span class="fstat-no" title="function not covered" >find(</span>) {
-<span class="cstat-no" title="statement not covered" >  return db("multiChoice as m")</span>
+<span class="cstat-no" title="statement not covered" >  return db("multichoice as m")</span>
     .join("questions as q", "m.questionId", "q.id")
     .select("m.id", "q.questionsBody", "m.ans_a","m.ans_b","m.ans_c");
 }

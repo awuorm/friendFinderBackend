@@ -8,7 +8,7 @@ exports.up = function(knex) {
         .unique();
       table.string("password").notNullable();
     })
-    .createTable("userProfile", table => {
+    .createTable("userprofile", table => {
       table.increments();
       table.string("firstName");
       table.string("LastName");
@@ -94,7 +94,7 @@ exports.up = function(knex) {
         .notNullable()
         .defaultTo(false);
     })
-    .createTable("answeredQuestions", table => {
+    .createTable("answeredquestions", table => {
       table.increments();
       table
         .integer("userId")
@@ -115,7 +115,7 @@ exports.up = function(knex) {
         .references("id")
         .inTable("answers");
     })
-    .createTable("multiChoice", table => {
+    .createTable("multichoice", table => {
       table.increments();
       table
         .integer("questionId")
@@ -133,9 +133,9 @@ exports.down = function(knex) {
   return knex.schema
     .dropTableIfExists("matches")
     .dropTableIfExists("chat")
-    .dropTableIfExists("userProfile")
-    .dropTableIfExists("answeredQuestions")
-    .dropTableIfExists("multiChoice")
+    .dropTableIfExists("userprofile")
+    .dropTableIfExists("answeredquestions")
+    .dropTableIfExists("multichoice")
     .dropTableIfExists("answers")
     .dropTableIfExists("questions")
     .dropTableIfExists("users")
