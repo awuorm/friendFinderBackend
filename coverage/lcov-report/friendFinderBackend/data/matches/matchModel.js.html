@@ -292,44 +292,44 @@ function <span class="fstat-no" title="function not covered" >insertMatches(</sp
 }
 function <span class="fstat-no" title="function not covered" >findMatch(</span>id) {
 <span class="cstat-no" title="statement not covered" >  return db("answeredquestions as a")</span>
-    .select("a.userId", "a.answerId")
-    .where({ answerId: id });
+    .select("a.userid", "a.answerid")
+    .where({ answerid: id });
 }
 &nbsp;
 function <span class="fstat-no" title="function not covered" >findById(</span>id) {
   let answerQuery = <span class="cstat-no" title="statement not covered" >db("answeredquestions as a")</span>
-    .where({ userId: id })
-    .select("a.answerId");
-<span class="cstat-no" title="statement not covered" >  answerQuery = answerQuery.map(<span class="fstat-no" title="function not covered" >an</span>s =&gt; <span class="cstat-no" title="statement not covered" >findMatch(ans.answerId))</span>;</span>
+    .where({ userid: id })
+    .select("a.answerid");
+<span class="cstat-no" title="statement not covered" >  answerQuery = answerQuery.map(<span class="fstat-no" title="function not covered" >an</span>s =&gt; <span class="cstat-no" title="statement not covered" >findMatch(ans.answerid))</span>;</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  return answerQuery;</span>
 }
 &nbsp;
 function <span class="fstat-no" title="function not covered" >potentialFriends(</span>id) {
   let probable = <span class="cstat-no" title="statement not covered" >db.raw(</span>
-    `SELECT ouA.userId AS potentialMatches,
+    `SELECT ouA.userid AS potentialMatches,
     count( * ) AS probability
 FROM (
-        SELECT ua.userId,
-               ua.questionId,
-               ua.answerId
+        SELECT ua.userid,
+               ua.questionid,
+               ua.answerid
           FROM answeredquestions AS ua
-         WHERE ua.userId = ${id}
+         WHERE ua.userid = ${id}
     )
     AS liA
     JOIN
     (
-        SELECT ua.userId,
-               ua.questionId,
-               ua.answerId
+        SELECT ua.userid,
+               ua.questionid,
+               ua.answerid
           FROM answeredquestions AS ua
-         WHERE ua.userId != ${id}
+         WHERE ua.userid != ${id}
     )
-    AS ouA ON liA.questionId = ouA.questionId AND 
-              liA.answerId = ouA.answerId
-              JOIN users as u on ouA.userId = u.id 
-GROUP BY liA.userId,
-       ouA.userId
+    AS ouA ON liA.questionid = ouA.questionid AND 
+              liA.answerid = ouA.answerid
+              JOIN users as u on ouA.userid = u.id 
+GROUP BY liA.userid,
+       ouA.userid
 HAVING count( * ) &gt; 0
 ORDER BY count( * ) DESC;`
   );

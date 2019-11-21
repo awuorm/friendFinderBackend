@@ -51,7 +51,7 @@ exports.up = function(knex) {
       table.increments();
       table.text("answersBody").notNullable();
       table
-        .integer("questionId")
+        .integer("questionid")
         .notNullable()
         .unsigned()
         .references("id")
@@ -97,19 +97,19 @@ exports.up = function(knex) {
     .createTable("answeredquestions", table => {
       table.increments();
       table
-        .integer("userId")
+        .integer("userid")
         .notNullable()
         .unsigned()
         .references("id")
         .inTable("users");
       table
-        .integer("questionId")
+        .integer("questionid")
         .notNullable()
         .unsigned()
         .references("id")
         .inTable("questions");
       table
-        .integer("answerId")
+        .integer("answerid")
         .notNullable()
         .unsigned()
         .references("id")
@@ -118,7 +118,7 @@ exports.up = function(knex) {
     .createTable("multichoice", table => {
       table.increments();
       table
-        .integer("questionId")
+        .integer("questionid")
         .notNullable()
         .unsigned()
         .references("id")
