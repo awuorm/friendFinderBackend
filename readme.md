@@ -12,6 +12,8 @@ expected response:
   "success": "Registration successful for user mildred"
 }
 
+response status code:201
+
 ## Login endpoint:
 
 post method,url:
@@ -26,6 +28,7 @@ expected response:
   "success": "Welcome mildred",
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0IjoxLCJ1c2VybmFtZSI6Im1pbGRyZWQiLCJpYXQiOjE1NzQzMzIwMzYsImV4cCI6MTU3NDQxODQzNn0.chPPthr1wJ3azRKschwavKx8Bdn65ttSKIPUSF6zZ6o"
 }
+response status code:200
 
 
 
@@ -51,6 +54,8 @@ Array of questions:
     "ans_c": null
   }]
 
+  response status code:200
+
 ## messages endpoint:
 
 post method,url:
@@ -62,6 +67,8 @@ expected request body:
 
 expected response:
 { success: "Message sent successfully" }
+
+response status code:201
 
 get method,url:
 
@@ -84,6 +91,8 @@ https://friend-finder-backend.herokuapp.com/api/restricted/msgs
   }
 ]
 
+response status code:200
+
 ## answers endpoint:
 
 post method,url:
@@ -97,6 +106,8 @@ response body:
   "success": "All your answers have been recorded"
 }
 
+
+response status code:201
 
 ## matches endpoint: 
 
@@ -128,6 +139,8 @@ expected response:
   }
 ]
 
+response status code:200
+
 put method, url:
 https://friend-finder-backend.herokuapp.com/api/restricted/matches
 
@@ -142,6 +155,8 @@ request body:
 
   response body:
   {success:"record updated successfully"}
+
+  response status code:201
 
 
 
