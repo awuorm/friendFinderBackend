@@ -4,18 +4,18 @@ const db = require("../dbConfig");
 const questionsModel = require("./questionsModel");
 
 beforeEach(async () => {
-await db("users").truncate();
+  await db("users").truncate();
 });
 
 describe("testing questions endpoint", () => {
   test("testing questions post", async () => {
     const response = await request(server)
       .post("/api/auth/register")
-      .send({ username: "alice", password: "1234" });
+      .send({ username: "peter", password: "1234" });
     expect(response.status).toBe(201);
     const response2 = await request(server)
       .post("/api/auth/login")
-      .send({ username: "alice", password: "1234" });
+      .send({ username: "peter", password: "1234" });
     expect(response2.status).toBe(200);
     const token = response2.body.token;
     console.log(token);
@@ -26,4 +26,3 @@ describe("testing questions endpoint", () => {
     expect(response3.status).toBe(200);
   });
 });
-

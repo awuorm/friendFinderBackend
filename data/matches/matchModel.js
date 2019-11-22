@@ -99,10 +99,8 @@ ORDER BY count( * ) DESC;`
     .then(match => {
       if (process.env.DB_ENV === "production") {
          return insertMatches(match.rows, id);
-        // res.status(200).json(matches.rows);
       } else {
        return insertMatches(match, id);
-        // res.status(200).json(matches);
       }
     });
 }
