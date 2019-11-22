@@ -25,12 +25,14 @@ function findMatches() {
     .join("users as u", "u.id", "m.potentialmatches")
     .select(
       "m.potentialmatches",
+      "m.id",
       "m.loggedin",
       "u.username as potentialMatch",
       "m.matched",
       "m.probability"
     ).where({matched:false})
     .groupBy("m.potentialmatches",
+    "m.id",
     "m.loggedin",
     "u.username",
     "m.matched",
