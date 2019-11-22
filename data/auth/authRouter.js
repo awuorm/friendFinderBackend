@@ -29,7 +29,7 @@ function handleUSerLogin(req, res) {
         const token = generateToken(user);
         res
           .status(200)
-          .json({ success: `Welcome ${user.username}`,Id:user.id, token: token });
+          .json({ success: `Welcome ${user.username}`,userid:user.id, token: token });
       } else {
         res.status(403).json({ warning: "Please provide a valid password" });
       }
