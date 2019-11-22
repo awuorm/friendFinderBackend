@@ -1,3 +1,4 @@
+## Documentation.
 ## Registration endpoint:
 
 post request,url:
@@ -126,6 +127,21 @@ expected response:
     "probability": 2
   }
 ]
+
+put method, url:
+https://friend-finder-backend.herokuapp.com/api/restricted/matches
+
+request body:
+{
+    "id": 3,
+    "loggedin": 1,
+    "potentialMatch": "effie",
+    "matched": true,
+    "probability": 12
+  }
+
+  response body:
+  {success:"record updated successfully"}
 
 
 
