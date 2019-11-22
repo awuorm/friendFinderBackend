@@ -5,7 +5,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 
-const countryRouter = require("./data/countryRouter");
+const countryRouter = require("./data/country/countryRouter");
 const authRouter = require("./data/auth/authRouter");
 const questionsRouter = require("./data/questions/questionsRouter");
 const msgsRouter = require("./data/messages/messagesRouter");
