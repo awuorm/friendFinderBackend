@@ -20,40 +20,56 @@ function updateMatches(user, id) {
     });
 }
 
-function findMatches() {
-  return db("matches as m")
-    .join("users as u", "u.id", "m.potentialmatches")
-    .select(
-      "m.potentialmatches",
-      "m.id",
-      "m.loggedin",
-      "u.username as potentialMatch",
-      "m.matched",
-      "m.probability"
-    ).where({matched:false})
-    .groupBy("m.potentialmatches",
-    "m.id",
-    "m.loggedin",
-    "u.username",
-    "m.matched",
-    "m.probability");
+function findMatches(id) {
+  let foundmatch = db("matches as m").where(
+    { loggedin: id },
+    "potenitialmatches"
+  );
+  return foundmatch;
+  // console.log(foundmatch);
+  //  .select(
+  //    "m.potentialmatches",
+  //    "m.id",
+  //    "m.loggedin",
+  //    "m.matched",
+  //    "m.probability"
+  //    )
+  //    .where({loggedin:id});
+  //    console.log(foundMatch);
+  //    return foundMatch;
+  // "u.username as potentialMatch",
+  // .join("users as u", "u.id", "m.potentialmatches")
+  // .groupBy(
+  //   "m.potentialmatches",
+  //   "m.id",
+  //   "m.loggedin",
+  //   "u.username",
+  //   "m.matched",
+  //   "m.probability"
+  // );
 }
 
-function insertMatches(match, id) {
-  console.log(match, id);
-  let matchedUsers = [];
-  match.map(user => {
-    matchedUsers = matchedUsers.concat({
-      potentialmatches: user.potentialmatches,
-      probability: user.probability,
-      loggedin: id
-    });
-    return matchedUsers;
+function insertMatches(matchedUsers, id) {
+  console.log(matchedUsers);
+  let foundDbUsers = db("matches");
+  console.log(foundDbUsers);
+  return foundDbUsers.then(foundDbMatch => {
+    if (foundDbMatch.length === 0) {
+      let insertUsersIntoDb = db("matches").insert(matchedUsers);
+      console.log(insertUsersIntoDb);
+      return insertUsersIntoDb.then(matched => findMatches(id));
+    } else {
+      let insertNewUsersIntoDb = db("matches").truncate();
+      console.log(insertNewUsersIntoDb);
+      return insertNewUsersIntoDb.then(matched => {
+        return db("matches")
+          .insert(matchedUsers)
+          .then(user => findMatches(id));
+      });
+    }
   });
-  return db("matches")
-    .insert(matchedUsers)
-    .then(() => findMatches(id));
 }
+
 function findMatch(id) {
   return db("answeredquestions as a")
     .select("a.userid", "a.answerid")
@@ -100,9 +116,98 @@ ORDER BY count( * ) DESC;`
     )
     .then(match => {
       if (process.env.DB_ENV === "production") {
-         return insertMatches(match.rows, id);
+        return insertMatches(match.rows, id);
       } else {
-       return insertMatches(match, id);
+        let matchedUsers = [];
+        match.map(user => {
+          let newUser = {
+            potentialmatches: user.potentialmatches,
+            probability: user.probability,
+            loggedin: id,
+            matched: 0
+          };
+          matchedUsers = matchedUsers.concat(newUser);
+          return matchedUsers;
+        });
+        //       });
+        return insertMatches(matchedUsers, id);
       }
     });
+  //   if (process.env.DB_ENV === "production") {
+  //     return insertMatches(match.rows, id);
+  //   } else {
+  //     match.map(user => {
+  //       let newUser = {
+  //         potentialmatches: user.potentialmatches,
+  //         probability: user.probability,
+  //         loggedin: id,
+  //         matched: 0
+  //       };
+  //       console.log(newUser);
+  //       let foundDbUsers = db("matches");
+  //       console.log(foundDbUsers);
+  //       return foundDbUsers.then(foundDbMatch => {
+  //         if (foundDbMatch.length === 0) {
+  //           let insertUsersIntoDb = db("matches").insert(newUser);
+  //           console.log(insertUsersIntoDb);
+  //           return insertUsersIntoDb;
+  //         } else {
+  //           console.log("from db ==>", foundDbMatch.length);
+  //           foundDbMatch.map(found => {
+  //             if (
+  //               found.potentialmatches !== newUser.potentialmatches &&
+  //               newUser.loggedin !== found.loggedin &&
+  //               found.matched !== newUser.matched
+  //             ) {
+  //               let insertNewUsersIntoDb = db("matches").insert(newUser);
+  //               console.log(insertNewUsersIntoDb);
+  //               return insertNewUsersIntoDb.then(() => findMatches(id));
+  //             } else if (
+  //               newUser.potentialmatches === found.potentialmatches &&
+  //               newUser.loggedin === found.loggedin &&
+  //               newUser.matched === found.matched &&
+  //               newUser.probability === found.probability
+  //             ) {
+  //               console.log(
+  //                 "replaceUser ==>",
+  //                 newUser,
+  //                 "found user ==>",
+  //                 found
+  //               );
+  //               // let updateUsersIntoDb = db("matches")
+  //               //   .where({ id: found.id })
+  //               //   .update({
+  //               //     potentialmatches: replaceUser.potentialmatches,
+  //               //     probability: replaceUser.probability,
+  //               //     loggedin: replaceUser.loggedin,
+  //               //     matched: replaceUser.matched
+  //               //   });
+  //               console.log("This match already exists in the database!");
+  //               return findMatches(id);
+  //               // return updateUsersIntoDb.then(() => findMatches(id));
+  //             } else if (
+  //               found.potentialmatches === newUser.potentialmatches &&
+  //               newUser.loggedin === found.loggedin &&
+  //               found.matched !== newUser.matched
+  //             ) {
+  //               console.log(newUser, "match has already been made!");
+  //               return findMatches(id);
+  //             }
+  //             //                   // else if (found.potentialmatches !== newUser.potentialmatches &&
+  //             //                   //   newUser.loggedin !== found.loggedin &&
+  //             //                   //   found.matched !== newUser.matched) {
+  //             //                   //   let insertNewUsersIntoDb = db("matches").insert(replaceUser);
+  //             //                   //   console.log(insertNewUsersIntoDb);
+  //             //                   //   return insertNewUsersIntoDb.then(() => findMatches(id));
+  //             //                   // }
+  //           });
+  //         }
+  //         //           });
+  //         //           // matchedUsers = matchedUsers.concat(newUser);
+  //         //           // return matchedUsers;
+  //       });
+  //       //         // return insertMatches(matchedUsers, id);
+  //     });
+  //   }
+  // });
 }
