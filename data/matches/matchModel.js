@@ -24,14 +24,14 @@ function findMatches(id) {
   let foundmatch = db("matches as m")
     .join("users as u", "u.id", "m.potentialmatches")
     .where({ loggedin: id })
-  .select(
-    "u.username as potentialmatchesname",
-    "m.potentialmatches",
-    "m.id",
-    "m.loggedin",
-    "m.matched",
-    "m.probability"
-  );
+    .select(
+      "u.username as potentialmatchesname",
+      "m.potentialmatches",
+      "m.id",
+      "m.loggedin",
+      "m.matched",
+      "m.probability"
+    );
 
   return foundmatch;
   // console.log(foundmatch);
@@ -123,9 +123,10 @@ HAVING count( * ) > 0
 ORDER BY count( * ) DESC;`
     )
     .then(match => {
+     
       if (process.env.DB_ENV === "production") {
         let matchedUsers = [];
-        match.map(user => {
+        match.rows.map(user => {
           let newUser = {
             potentialmatches: user.potentialmatches,
             probability: user.probability,
@@ -135,7 +136,7 @@ ORDER BY count( * ) DESC;`
           matchedUsers = matchedUsers.concat(newUser);
           return matchedUsers;
         });
-        return insertMatches(matchedUsers.rows, id);
+        return insertMatches(matchedUsers, id);
       } else {
         let matchedUsers = [];
         match.map(user => {
@@ -148,7 +149,6 @@ ORDER BY count( * ) DESC;`
           matchedUsers = matchedUsers.concat(newUser);
           return matchedUsers;
         });
-        //       });
         return insertMatches(matchedUsers, id);
       }
     });
