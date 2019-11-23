@@ -21,10 +21,18 @@ function updateMatches(user, id) {
 }
 
 function findMatches(id) {
-  let foundmatch = db("matches as m").where(
-    { loggedin: id },
-    "potenitialmatches"
+  let foundmatch = db("matches as m")
+    .join("users as u", "u.id", "m.potentialmatches")
+    .where({ loggedin: id })
+  .select(
+    "u.username as potentialmatchesname",
+    "m.potentialmatches",
+    "m.id",
+    "m.loggedin",
+    "m.matched",
+    "m.probability"
   );
+
   return foundmatch;
   // console.log(foundmatch);
   //  .select(
