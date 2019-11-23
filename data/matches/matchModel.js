@@ -23,7 +23,7 @@ function updateMatches(user, id) {
 function findMatches(id) {
   let foundmatch = db("matches as m")
     .join("users as u", "u.id", "m.potentialmatches")
-    .where({ loggedin: id })
+    .where({ loggedin: id ,matched: 0})
     .select(
       "u.username as potentialmatchesname",
       "m.potentialmatches",
@@ -67,7 +67,9 @@ function insertMatches(matchedUsers, id) {
       console.log(insertUsersIntoDb);
       return insertUsersIntoDb.then(matched => findMatches(id));
     } else {
-      let insertNewUsersIntoDb = db("matches").truncate();
+      let insertNewUsersIntoDb = db("matches")
+      .where({ matched: 0})
+        .delete();
       console.log(insertNewUsersIntoDb);
       return insertNewUsersIntoDb.then(matched => {
         return db("matches")
@@ -123,7 +125,6 @@ HAVING count( * ) > 0
 ORDER BY count( * ) DESC;`
     )
     .then(match => {
-     
       if (process.env.DB_ENV === "production") {
         let matchedUsers = [];
         match.rows.map(user => {
