@@ -124,7 +124,18 @@ ORDER BY count( * ) DESC;`
     )
     .then(match => {
       if (process.env.DB_ENV === "production") {
-        return insertMatches(match.rows, id);
+        let matchedUsers = [];
+        match.map(user => {
+          let newUser = {
+            potentialmatches: user.potentialmatches,
+            probability: user.probability,
+            loggedin: id,
+            matched: 0
+          };
+          matchedUsers = matchedUsers.concat(newUser);
+          return matchedUsers;
+        });
+        return insertMatches(matchedUsers.rows, id);
       } else {
         let matchedUsers = [];
         match.map(user => {
