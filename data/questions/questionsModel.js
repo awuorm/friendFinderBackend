@@ -8,7 +8,8 @@ module.exports = {
 
 function add(answers,id) {
   return db("answeredquestions")
-    .insert(answers).then(answers => matches.findById(id));
+    .insert(answers);
+    // .then(answers => matches.findById(id));
 }
 
 function find() {
