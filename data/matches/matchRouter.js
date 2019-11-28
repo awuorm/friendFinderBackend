@@ -6,6 +6,20 @@ const restricted = require("../auth/authenticate");
 
 router.get("/",restricted, handleMatches);
 router.put("/",restricted,handleMatchesPut);
+router.get("/true",restricted,handleTrueMatches);
+
+function handleTrueMatches(req,res) {
+  const id  = req.decodedToken.subject;
+    db.findTrueMatch(id)
+      .then(data => {
+        res.status(200).json(data);
+        console.table(data);
+      })
+      .catch(error => {
+        res.status(500).json({ errorMessage: error.message });
+        console.log(error);
+      });
+}
 
 function handleMatchesPut(req,res) {
   const id  = req.decodedToken.subject;
