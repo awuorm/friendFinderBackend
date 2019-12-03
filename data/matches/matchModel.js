@@ -12,8 +12,7 @@ module.exports = {
 
 function updateMatches(user, id) {
   return db("matches")
-    .where({ id: user.id })
-    .update({
+    .insert({
       potentialmatches: user.potentialmatches,
       probability: user.probability,
       loggedin: id,

@@ -5,7 +5,7 @@ const restricted = require("../auth/authenticate");
 
 
 router.get("/",restricted, handleMatches);
-router.put("/",restricted,handleMatchesPut);
+router.post("/",restricted,handleMatchesPut);
 router.get("/true",restricted,handleTrueMatches);
 
 function handleTrueMatches(req,res) {
