@@ -6,13 +6,13 @@ module.exports = {
   potentialFriends,
   insertMatches,
   findMatches,
-  updateMatches
+  updateMatches,
+  findTrueMatch,
 };
 
 function updateMatches(user, id) {
   return db("matches")
-    .where({ id: user.id })
-    .update({
+    .insert({
       potentialmatches: user.potentialmatches,
       probability: user.probability,
       loggedin: id,
@@ -34,27 +34,22 @@ function findMatches(id) {
     );
 
   return foundmatch;
-  // console.log(foundmatch);
-  //  .select(
-  //    "m.potentialmatches",
-  //    "m.id",
-  //    "m.loggedin",
-  //    "m.matched",
-  //    "m.probability"
-  //    )
-  //    .where({loggedin:id});
-  //    console.log(foundMatch);
-  //    return foundMatch;
-  // "u.username as potentialMatch",
-  // .join("users as u", "u.id", "m.potentialmatches")
-  // .groupBy(
-  //   "m.potentialmatches",
-  //   "m.id",
-  //   "m.loggedin",
-  //   "u.username",
-  //   "m.matched",
-  //   "m.probability"
-  // );
+}
+
+function findTrueMatch(id) {
+  let foundmatch = db("matches as m")
+    .join("users as u", "u.id", "m.potentialmatches")
+    .where({ loggedin: id ,matched: 1})
+    .select(
+      "u.username as potentialmatchesname",
+      "m.potentialmatches",
+      "m.id",
+      "m.loggedin",
+      "m.matched",
+      "m.probability"
+    );
+
+  return foundmatch;
 }
 
 function insertMatches(matchedUsers, id) {

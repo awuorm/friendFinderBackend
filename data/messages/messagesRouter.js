@@ -7,7 +7,8 @@ router.post("/", restricted, handleMsgPost);
 router.get("/", restricted, handleMsgGet);
 
 function handleMsgGet(req, res) {
-  db.find()
+  const id  = req.decodedToken.subject;
+  db.find(id)
     .then(data => {
       res.status(200).json(data);
       console.table(data);

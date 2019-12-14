@@ -14,6 +14,9 @@ function add(message) {
     .insert(message, "id");
 }
 
-function find() {
-  return db("chat");
+function find(id) {
+  return db("chat as c")
+         .join("users as u","u.id","c.recepient")
+         .select("c.id","u.username as recipient","c.sender","c.message")
+         .groupBy("c.recepient");
 }
